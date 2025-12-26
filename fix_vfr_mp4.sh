@@ -93,6 +93,10 @@ process_file() {
                 echo "VFR file needs MKV: $file"
             fi
         fi
+    else
+        if [[ -n "$FILE_PATH" ]]; then
+            echo "no problem"
+        fi
     fi
 }
 
