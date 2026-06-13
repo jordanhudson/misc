@@ -80,6 +80,9 @@ script_id=$("$QDBUS" org.kde.KWin /Scripting org.kde.kwin.Scripting.loadScript "
 
 "$QDBUS" org.kde.KWin "/Scripting/Script${script_id}" org.kde.kwin.Script.run \
     || die "failed to run KWin script"
+# Script.run is async: KWin reads and evaluates the file after the DBus call
+# returns. Wait before unloading the script (and deleting the temp file on EXIT).
+sleep 0.5
 "$QDBUS" org.kde.KWin /Scripting org.kde.kwin.Scripting.unloadScript "$plugin_name" >/dev/null
 
 echo "Done: $new_primary is primary and all windows were moved to it."
